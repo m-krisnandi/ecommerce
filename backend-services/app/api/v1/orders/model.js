@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
     {
-        orderId: String,
         customerId: String,
         amount: Number,
         status: String,

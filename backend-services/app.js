@@ -9,6 +9,7 @@ const usersRouter = require("./app/api/v1/users/router");
 const authRouter = require("./app/api/v1/auth/router");
 const productsRouter = require("./app/api/v1/products/router");
 const customerRouter = require("./app/api/v1/customer/router");
+const orderRouter = require("./app/api/v1/orders/router");
 
 // middlewares
 const notFoundMiddleware = require("./app/middlewares/not-found");
@@ -27,6 +28,7 @@ app.use(`${v1}`, usersRouter);
 app.use(`${v1}`, authRouter);
 app.use(`${v1}`, productsRouter);
 app.use(`${v1}`, customerRouter);
+app.use(`${v1}`, orderRouter);
 
 // catch 404 and forward to error handler
 app.use(notFoundMiddleware);

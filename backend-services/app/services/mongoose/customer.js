@@ -10,7 +10,8 @@ const customerProfile = async (req) => {
     const profile = await Users.findOne({ _id: id })
         .populate("address")
         .populate("favorite")
-        .populate("cart.product");
+        .populate("cart.product")
+        .populate("orders");
 
     return profile;
 };
