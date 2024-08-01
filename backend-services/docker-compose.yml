@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    image: ecommerce-app
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      - PORT=9000
+      - URL_MONGODB_DEV=mongodb://db:27017/ecommerce
+      - JWT_SECRET=secret
+      - JWT_EXPIRATION=7d
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo-data:
