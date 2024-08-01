@@ -7,7 +7,7 @@ const {
     updateProduct,
     deleteProduct,
 } = require("../../../services/mongoose/products");
-const { addFavoriteItem } = require("../../../services/mongoose/users");
+const { addFavoriteItem } = require("../../../services/mongoose/customer");
 
 const create = async (req, res, next) => {
     try {

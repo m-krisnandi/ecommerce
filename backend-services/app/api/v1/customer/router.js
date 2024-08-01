@@ -1,5 +1,5 @@
 const express = require("express");
-const { findFavorite, findCustomerProfile, createCustomerAddress } = require("./controller");
+const { findFavorite, findCustomerProfile, createCustomerAddress, updateCustomerProfile, deleteCustomerProfile } = require("./controller");
 const {
     authenticateUser,
     authorizeRoles,
@@ -12,6 +12,18 @@ router.get(
     authenticateUser,
     authorizeRoles("customer"),
     findCustomerProfile
+);
+router.put(
+    "/customer/profile",
+    authenticateUser,
+    authorizeRoles("customer"),
+    updateCustomerProfile
+);
+router.delete(
+    "/customer/profile",
+    authenticateUser,
+    authorizeRoles("customer"),
+    deleteCustomerProfile
 );
 router.post(
     "/customer/address",
