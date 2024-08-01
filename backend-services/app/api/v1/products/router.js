@@ -6,6 +6,9 @@ const {
     update,
     destroy,
     addFavorite,
+    addCart,
+    deleteFavorite,
+    deleteCart,
 } = require("./controller");
 const {
     authenticateUser,
@@ -19,6 +22,25 @@ router.put(
     authenticateUser,
     authorizeRoles("admin", "customer"),
     addFavorite
+);
+router.delete(
+    "/favorite/:id",
+    authenticateUser,
+    authorizeRoles("admin", "customer"),
+    deleteFavorite
+);
+
+router.put(
+    "/cart",
+    authenticateUser,
+    authorizeRoles("admin", "customer"),
+    addCart
+);
+router.delete(
+    "/cart/:id",
+    authenticateUser,
+    authorizeRoles("admin", "customer"),
+    deleteCart
 );
 
 router.get("/products", findAll);

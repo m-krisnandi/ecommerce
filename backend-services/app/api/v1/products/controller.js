@@ -7,7 +7,7 @@ const {
     updateProduct,
     deleteProduct,
 } = require("../../../services/mongoose/products");
-const { addFavoriteItem } = require("../../../services/mongoose/customer");
+const { addFavoriteItem, deleteFavoriteItem, addToCart, deleteFromCart } = require("../../../services/mongoose/customer");
 
 const create = async (req, res, next) => {
     try {
@@ -88,11 +88,62 @@ const addFavorite = async (req, res, next) => {
     }
 };
 
+// Delete Favorite
+const deleteFavorite = async (req, res, next) => {
+    try {
+        const result = await deleteFavoriteItem(req);
+        sendResponse(
+            res,
+            StatusCodes.OK,
+            true,
+            result,
+            "Favorite deleted successfully"
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Add Cart
+const addCart = async (req, res, next) => {
+    try {
+        const result = await addToCart(req);
+        sendResponse(
+            res,
+            StatusCodes.OK,
+            true,
+            result,
+            "Cart added successfully"
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Delete Cart
+const deleteCart = async (req, res, next) => {
+    try {
+        const result = await deleteFromCart(req);
+        sendResponse(
+            res,
+            StatusCodes.OK,
+            true,
+            result,
+            "Cart deleted successfully"
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     create,
     findAll,
     findOne,
     update,
     destroy,
-    addFavorite
+    addFavorite,
+    deleteFavorite,
+    addCart,
+    deleteCart
 };
