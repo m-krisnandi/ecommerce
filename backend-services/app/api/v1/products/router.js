@@ -1,12 +1,30 @@
 const express = require("express");
-const { create, findAll, findOne, update, destroy } = require("./controller");
+const {
+    create,
+    findAll,
+    findOne,
+    update,
+    destroy,
+    addFavorite,
+} = require("./controller");
+const {
+    authenticateUser,
+    authorizeRoles,
+} = require("../../../middlewares/auth");
 
 const router = express.Router();
 
-router.post("/products", create);
+router.put(
+    "/favorite",
+    authenticateUser,
+    authorizeRoles("admin", "customer"),
+    addFavorite
+);
+
 router.get("/products", findAll);
 router.get("/products/:id", findOne);
-router.put("/products/:id", update);
-router.delete("/products/:id", destroy);
+router.post("/products", authenticateUser, authorizeRoles("admin"), create);
+router.put("/products/:id", authenticateUser, authorizeRoles("admin"), update);
+router.delete("/products/:id", authenticateUser, authorizeRoles("admin"), destroy);
 
 module.exports = router;

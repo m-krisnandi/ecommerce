@@ -16,23 +16,38 @@ const userSchema = new Schema(
             unique: true,
             required: [true, "Email is required"],
         },
+        phone: String,
         password: {
             type: String,
             required: [true, "Password is required"],
-            minlength: [6, "Password minimum 6 characters"],
-            maxlength: [50, "Password maximum 50 characters"],
         },
         role: {
             type: String,
             enum: ["admin", "customer"],
-            default: "admin",
+            default: "customer",
         },
+        address: [
+            { type: Schema.Types.ObjectId, ref: "address", required: true },
+        ],
+        favorite: [
+            { type: Schema.Types.ObjectId, ref: "product", required: true },
+        ],
+        cart: [
+            {
+                product: {
+                    type: Schema.Types.ObjectId,
+                    ref: "product",
+                    required: true,
+                },
+                unit: { type: Number, required: true },
+            },
+        ],
+        orders: [{ type: Schema.Types.ObjectId, ref: "order", required: true }],
     },
     {
         toJSON: {
             transform(doc, ret) {
                 delete ret.password;
-                delete ret.salt;
                 delete ret.__v;
             },
         },

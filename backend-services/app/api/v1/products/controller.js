@@ -7,6 +7,7 @@ const {
     updateProduct,
     deleteProduct,
 } = require("../../../services/mongoose/products");
+const { addFavoriteItem } = require("../../../services/mongoose/users");
 
 const create = async (req, res, next) => {
     try {
@@ -71,10 +72,27 @@ const destroy = async (req, res, next) => {
     }
 };
 
+// Add Favorite
+const addFavorite = async (req, res, next) => {
+    try {
+        const result = await addFavoriteItem(req);
+        sendResponse(
+            res,
+            StatusCodes.OK,
+            true,
+            result,
+            "Favorite added successfully"
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     create,
     findAll,
     findOne,
     update,
     destroy,
+    addFavorite
 };

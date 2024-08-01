@@ -2,7 +2,7 @@ const Users = require("../../api/v1/users/model");
 const { BadRequestError } = require("../../errors");
 
 const createUser = async (req, res) => {
-    const { name, password, role, confirmPassword, email } = req.body;
+    const { name, password, phone, role, confirmPassword, email } = req.body;
 
     if (password !== confirmPassword) {
         throw new BadRequestError("Password and confirmPassword not match");
@@ -11,6 +11,7 @@ const createUser = async (req, res) => {
     const result = await Users.create({
         name,
         email,
+        phone,
         password,
         role,
     });
@@ -40,7 +41,7 @@ const getUserById = async (req) => {
 
 const updateUser = async (req) => {
     const { id } = req.params;
-    const { name, password, role, confirmPassword, email } = req.body;
+    const { name, password, phone, role, confirmPassword, email } = req.body;
 
     const check = await Users.findOne({
         email,
@@ -57,7 +58,7 @@ const updateUser = async (req) => {
         {
             _id: id,
         },
-        { name, email, password, role },
+        { name, email, phone, password, role },
         { new: true, runValidators: true }
     );
 

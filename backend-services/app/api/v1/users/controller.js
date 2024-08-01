@@ -6,6 +6,7 @@ const {
     getUserById,
     updateUser,
     deleteUser,
+    favorite,
 } = require("../../../services/mongoose/users");
 
 const create = async (req, res, next) => {
