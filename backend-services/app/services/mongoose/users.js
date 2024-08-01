@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const Users = require("../../api/v1/users/model");
 const { BadRequestError } = require("../../errors");
 
@@ -54,11 +55,18 @@ const updateUser = async (req) => {
         throw new BadRequestError("Password and confirmPassword not match");
     }
 
+    // Prepare the update object
+    let updateData = { name, email, phone, role };
+
+    // If a new password is provided, hash it and add to update data
+    if (password) {
+        const hashedPassword = await bcrypt.hash(password, 12);
+        updateData.password = hashedPassword;
+    }
+
     const result = await Users.findOneAndUpdate(
-        {
-            _id: id,
-        },
-        { name, email, phone, password, role },
+        { _id: id },
+        updateData,
         { new: true, runValidators: true }
     );
 
